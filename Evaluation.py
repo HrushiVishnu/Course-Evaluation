@@ -67,11 +67,11 @@ def get_sentiment(text):
     sentiment_scores = sia.polarity_scores(text)
     
     if sentiment_scores['compound'] > 0.05:
-        return 'positive'
+        return 'Positive'
     elif sentiment_scores['compound'] < -0.05:
-        return 'negative'
+        return 'Negative'
     else:
-        return 'neutral'
+        return 'Neutral'
     
 def autolabel(rects, ax):
     for rect in rects:
@@ -110,7 +110,10 @@ def plot_sentiment_distribution(df, sentiment_column, column_name):
 def main():
     st.set_option('deprecation.showPyplotGlobalUse', False)
     st.set_page_config(layout="wide")
-    st.title("Course Evaluation Report Analysis")
+    with st.sidebar:
+        image = Image.open('UI/AI_Lab_Logo.png')
+        st.image(image)
+    st.title("Course Evaluation Dashboard")
 
     pdf_docs = st.file_uploader(
         "Upload your Course Evaluation Report here and click on 'Process'", accept_multiple_files=True
@@ -134,9 +137,9 @@ def main():
         sentiment_percentages = (sentiment_counts / total_comments) * 100
 
         colors = {
-            "positive": "green",
-            "negative": "red",
-            "neutral": "blue"
+            "Positive": "green",
+            "Negative": "red",
+            "Neutral": "blue"
         }
 
         sentiment_display = " &nbsp; ".join([f'<span style="color: {colors[sentiment]}">{sentiment}: {percentage:.2f}%</span>' for sentiment, percentage in sentiment_percentages.items()])
